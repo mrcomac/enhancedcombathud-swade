@@ -18,8 +18,7 @@
       }
     ],
     "esmodules": [
-      "scripts/settings.js",
-      "scripts/main.js"
+      "dist/argo-swade.min.js"
     ],
     "styles": [
       "styles/swadeCustom.css"
