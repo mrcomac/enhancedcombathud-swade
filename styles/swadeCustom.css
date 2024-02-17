@@ -1,0 +1,131 @@
+.dice {
+    margin: 0 1rem !important;
+    filter: brightness(0.8) !important;
+    height: 30px !important;
+    width: 30px !important;
+    display: block !important;
+    
+}
+
+.wildcard {
+    padding-left: 30px;
+    background: url('../../../systems/swade/assets/bennie.webp');
+    background-position: left;
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    float: right;
+}
+
+.d4 {
+    
+    background: url('../../../systems/swade/assets/dice/d4-grey.svg') !important;
+    background-repeat: no-repeat !important;
+    background-size: 30px 30px !important;
+}
+    
+.d6 {
+    background: url('../../../systems/swade/assets/dice/d6-grey.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.d8 {
+    background: url('../../../systems/swade/assets/dice/d8-grey.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.d10 { 
+    background: url('../../../systems/swade/assets/dice/d10-grey.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.d12 {
+    background: url('../../../systems/swade/assets/dice/d12-grey.svg');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.weapon-set-singleslot {
+    align-items: center;
+    backdrop-filter: blur(6px);
+    border: 1px solid transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-right: 0.75rem; 
+
+    pointer-events: all;
+}
+.weapon-set-singleslot:before {
+    border-radius: 0%;
+    border: 0px solid transparent !important;
+    content: '';
+    height: 0px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, 100%) translateY(2.5px) !important;
+    transition: all 0.1s ease-in-out;
+    width: 0px;
+    pointer-events: none;
+}
+.weapon-set-singleslot:hover:before,
+.weapon-set-singleslot.active:before {
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+	transform: translate(-50%, 50%) !important;
+}
+.weapon-set-singleslot.active:after {
+    border-radius: 50%;
+    content: '';
+    height: 15px;
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, 100%) translateY(2.5px) !important;
+    width: 15px;
+    pointer-events: none;
+}
+.weapon-set-singleslot > .set {
+    background: no-repeat center;
+    background-origin: border-box;
+    background-size: contain;
+    height: 50px;
+    min-width: 50px;
+}
+
+.weapon-set-singleslot > .set.set-primary:before,
+.weapon-set-singleslot > .set.set-primary:after {
+    border-left: 2px solid transparent !important;
+    content: '';
+    height: 25px;
+    left: 50%;
+    position: absolute;
+    top: 0px;
+    transform: translateX(-50%);
+    width: 0px;
+}
+.weapon-set-singleslot > .set.set-primary:after {
+    transform: translate(-50%, 25px);
+}
+.weapon-set-singleslot:hover > .set.set-primary:before,
+.weapon-set-singleslot:hover > .set.set-primary:after,
+.weapon-set-singleslot.active > .set.set-primary:before,
+.weapon-set-singleslot.active > .set.set-primary:after {
+    height: 12.5px;
+}
+.weapon-set-singleslot:hover > .set.set-primary:after,
+.weapon-set-singleslot.active > .set.set-primary:after {
+    transform: translate(-50%, 37.5px);
+}
+
+.extended-combat-hud .portrait-hud .portrait-stat-block {
+    float: left  !important; 
+}
+
+.portrait-hud:after {
+    content: "";
+    display: table !important;
+    clear: both;
+  }

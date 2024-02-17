@@ -1,0 +1,9 @@
+<div>
+		{{#each sets}}
+
+		<div class="weapon-set weapon-set-singleslot" data-type="switchWeapons" data-set="{{@key}}">
+			<div class="set set-primary" draggable="true" data-set="{{@key}}" data-slot="primary" style="background-image: url({{primary.img}})"></div>
+		</div>
+
+		{{/each}}
+	</div>

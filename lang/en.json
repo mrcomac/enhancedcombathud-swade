@@ -1,0 +1,147 @@
+{
+	"enhancedcombathud-swade": {
+	  "combatHelper": {
+		"freeActions": {
+		  "name": "Free Actions",
+		  "description": "You can perform many actions are needed",
+		  "move": {
+			"name": "Move",
+			"description": "Move up to your Pace in inches, up to once per turn",
+			"img": "/assets/icons/move.svg"
+		  },
+		  "run": {
+			"name": "Run",
+			"description": "Run up to once per turn, up to the result of your Running die. Other actions this turn get -2.",
+			"img": "/assets/icons/run.svg"
+		  },
+		  "speak": {
+			"name": "Speak",
+			"description": "Speak one or two short sentences.",
+			"img": "/assets/icons/speak.svg"
+		  },
+		  "prone": {
+			"name": "Go Prone",
+			"description": "Go Prone to become harder to hit at range. Standing costs 2 points of Pace for that turn.",
+			"img": "/assets/icons/drop.svg"
+		  },
+		  "drop": {
+			"name": "Drop",
+			"description": "Drop an item. Throwing usually requires an attack.",
+			"img": "/assets/icons/drop.svg"
+		  },
+		  "ask": {
+			"name": "Not Sure",
+			"description": "Not Sure if an unusual action is free? ASk the GM.",
+			"img": "/assets/icons/ask.svg"
+		  }
+		},
+		"mainActions": {
+		  "name": "Actions",
+		  "description": "Main actions can be up to 3 with penalties",
+		  "attack": {
+			"name": "Attack",
+			"description": "Attack a target with a weapon, casting a power or with our own body (hands, feet).",
+			"img": "/assets/icons/swords.svg"
+		  },
+		  "shot": {
+			"name": "Shot",
+			"description": "Call your shot. Target a body part or weapon, at a penalty to hit. The GM will tell you how difficult your shot will be.",
+			"img": "/assets/icons/target.svg"
+		  },
+		  "push": {
+			"name": "Push",
+			"description": "Push an enemy in melee range up to 1\", or 2\" on a raise. Get a run up to push farther!",
+			"img": "/assets/icons/push.svg"
+		  },
+		  "grapple": {
+			"name": "Grapple",
+			"description": "Grapple an enemy in melee range to make them Entangled, or Bound on a raise (see conditions). You can make Strength rolls to crush them on future turns.",
+			"img": "/assets/icons/grapple.svg"
+		  },
+		  "defend": {
+			"name": "Defend",
+			"description": "Defend yourself. Increase your Parry by +4 until next turn. Cannot be a Multi-Action",
+			"img": "/assets/icons/defend.svg"
+		  },
+		  "test": {
+			"name": "Test",
+			"description": "Test one enemy you can reasonably taunt, trip, or harass. Win an opposed roll to make them Distracted or Vulnerable.",
+			"img": "/assets/icons/test.svg"
+		  },
+		  "support": {
+			"name": "Support",
+			"description": "Support one ally you can reasonably help. Declare which Skill you are using to help, and which of the ally's Traits you are trying to raise.",
+			"img": "/assets/icons/support.svg"
+		  },
+		  "aim": {
+			"name": "Aim",
+			"description": "Aim at a specific target. If you do nothing else this turn, you can ignore up to -4 of penalties, or get a +2 to hit that target, next turn.",
+			"img": "/assets/icons/aim.svg"
+		  },
+		  "reload": {
+			"name": "Reload",
+			"description": "Reload your weapon. Weapons with Reload X require X actions to reload.",
+			"img": "/assets/icons/reload.svg"
+		  }
+		}
+	  },
+	  "Buttons": {
+		"addBenny": {
+		  "name": "Give a Benny",
+		  "description": "Give a bennie to a wild card"
+		},
+		"removeBenny": {
+		  "name": "Spend a Benny",
+		  "description": "Spend a benny"
+		},
+		"useItem": {
+		  "name": "USE ITEM",
+		  "description": "Use an item"
+		}
+	  },
+	  "Titles": {
+		"MainActions": "MAIN ACTIONS",
+		"AttributesSkills": "Attributes & Skills",
+		"OtherActions": "Other Actions",
+		"SlowAction": "SLOW ACTIONS",
+		"FastAction": "FAST ACTIONS",
+		"ReAction": "REACTIONS",
+		"HelpMe": "Help Me",
+		"Run": "Running die",
+		"Flee": "Flee",
+		"WPG": "Wrestle",
+		"Survey": "Survey",
+		"TreatInjuries": "Treat injuries",
+		"DrawWeapon": "Draw weapon",
+		"Standup": "Stand up",
+		"Move": "Move",
+		"TakeCover": "Take cover",
+		"Dodge": "Dodge",
+		"Parry": "Parry",
+		"BreakFree": "Break free",
+		"Chase": "Chase",
+		"LevelUP": "Trigger character advancement",
+		"openXPoptionsmenu": "Configure Experince options",
+		"XPOptions": "Experience Options",
+		"defaultXPOption": {
+		  "name": "New Experience option"
+		},
+		"addXPOption": "Add Experience option",
+		"confirmChanges": "Confirm and save",
+		"OpenXPMenu": "Open character advancement menu",
+		"CharacterAdvancement": "Character advancement",
+		"CheckWhichApplies": "Check all questions you can answer with \"yes\":",
+		"confirmXP": "Confirm"
+	  },
+	  "Descriptions": {
+		"Range": "Range",
+		"Shots": "Shots",
+		"Damage":"Damage"
+		
+	  }
+	},
+	"enhancedcombathud.themeOptions.mainAction": "Slow Action Colors",
+	"enhancedcombathud.themeOptions.bonusAction": "Fast Action Colors",
+	"enhancedcombathud.themeOptions.freeAction": "Not used by Argon Vaesen",
+	"enhancedcombathud.themeOptions.reaction": "Reaction Colors"
+  }

@@ -1,0 +1,53 @@
+{
+    "id": "enhancedcombathud-swade",
+    "title": "Argon - Combat HUD (SWADE)",
+    "description": "An Argon version for the SWADE System",
+    "authors": [
+      {
+      "name": "mrcomac"
+      }
+    ],
+    "version": "placeholder",
+    "socket": "true",
+    "languages": [
+      {
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json",
+        "flags": {}
+      }
+    ],
+    "esmodules": [
+      "scripts/settings.js",
+      "scripts/main.js"
+    ],
+    "styles": [
+      "styles/swadeCustom.css"
+    ],
+    "relationships": {
+      "requires": [
+          {
+              "id": "enhancedcombathud",
+              "type": "module",
+              "compatibility": {}
+          }
+      ],
+      "systems": [
+          {
+              "id": "swade",
+              "type": "system",
+              "compatibility": {}
+          }
+      ]
+    },
+    "compatibility": {
+      "minimum": "11",
+      "verified": "11"
+    },
+    "url": "https://github.com/mrcomac/enhancedcombathud-swade",
+    "download": "placeholder",
+    "manifest": "https://github.com/mrcomac/enhancedcombathud-swade/releases/latest/download/module.json",
+    "readme": "https://github.com/mrcomac/enhancedcombathud-swade/blob/main/README.md",
+    "changelog": "placeholder",
+    "allowBugReporter": true
+  }
