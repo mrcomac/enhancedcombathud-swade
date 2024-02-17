@@ -37,7 +37,12 @@
 		},
 		"mainActions": {
 		  "name": "Actions",
-		  "description": "Main actions can be up to 3 with penalties",
+		  "description": "Main actions can be up to 3 with penalties. <br />You may take up to two extra Actions per round. You must declare all actions before rolling. Each additionalAction causes a -2 penalty to all your Actions that turn.",
+		  "multi": {
+			"name": "Multi-Action",
+			"description": "You may take up to two extra Actions per round. You must declare all actions before rolling. Each additionalAction causes a -2 penalty to all your Actions that turn.",
+			"img": "/assets/icons/swords.svg"
+		  },
 		  "attack": {
 			"name": "Attack",
 			"description": "Attack a target with a weapon, casting a power or with our own body (hands, feet).",
@@ -102,36 +107,10 @@
 	  "Titles": {
 		"MainActions": "MAIN ACTIONS",
 		"AttributesSkills": "Attributes & Skills",
-		"OtherActions": "Other Actions",
-		"SlowAction": "SLOW ACTIONS",
-		"FastAction": "FAST ACTIONS",
-		"ReAction": "REACTIONS",
+		"FreeActions": "Free Actions",
+		"Other": "Others",
 		"HelpMe": "Help Me",
-		"Run": "Running die",
-		"Flee": "Flee",
-		"WPG": "Wrestle",
-		"Survey": "Survey",
-		"TreatInjuries": "Treat injuries",
-		"DrawWeapon": "Draw weapon",
-		"Standup": "Stand up",
-		"Move": "Move",
-		"TakeCover": "Take cover",
-		"Dodge": "Dodge",
-		"Parry": "Parry",
-		"BreakFree": "Break free",
-		"Chase": "Chase",
-		"LevelUP": "Trigger character advancement",
-		"openXPoptionsmenu": "Configure Experince options",
-		"XPOptions": "Experience Options",
-		"defaultXPOption": {
-		  "name": "New Experience option"
-		},
-		"addXPOption": "Add Experience option",
-		"confirmChanges": "Confirm and save",
-		"OpenXPMenu": "Open character advancement menu",
-		"CharacterAdvancement": "Character advancement",
-		"CheckWhichApplies": "Check all questions you can answer with \"yes\":",
-		"confirmXP": "Confirm"
+		"Run": "Running die"
 	  },
 	  "Descriptions": {
 		"Range": "Range",

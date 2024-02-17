@@ -5,7 +5,7 @@ const ECHItems = {};
 const HelperMainButtons = []
 const HelperFreeButtons = []
 const MODULE_FOLDER= "modules/enhancedcombathud-swade/"
-
+let RUNNING = 0
 export function initConfig() {
 
     Hooks.on("argonInit", (CoreHUD) => {
@@ -370,6 +370,7 @@ export function initConfig() {
 
             _onNewRound(combat) {
                 this.isActionUsed = false;
+                RUNNING = 0;
                 this.updateActionUse();
             }
 
@@ -403,7 +404,6 @@ export function initConfig() {
                 }
                 if (defaultActions.length == 4) {
                 buttons.push(...[new SWADEItemButton({ item: null, isWeaponSet: true, isPrimary: true }), 
-                                 ...helperButtons,
                                  ...bennieButtons,
                                  ...spellButton,
                                  new ARGON.MAIN.BUTTONS.SplitButton(
@@ -412,14 +412,16 @@ export function initConfig() {
                                  new ARGON.MAIN.BUTTONS.SplitButton(
                                     new SWADESpecialActionButton(defaultActions[2], this.color),
                                     new SWADESpecialActionButton(defaultActions[3]), this.color),
-                                new SWADEButtonPanelButton({ type: "consumable", items: consumableItems, color: this.color })]);
+                                new SWADEButtonPanelButton({ type: "consumable", items: consumableItems, color: this.color }),
+                                ...helperButtons
+                            ]);
                 } else {
                     buttons.push(...[new SWADEItemButton({ item: null, isWeaponSet: true, isPrimary: true }),
-                                ...helperButtons,
                                 ...bennieButtons,
                                 ...spellButton,
                                 ...actionButton,
-                                new SWADEButtonPanelButton({ type: "consumable", items: consumableItems, color: this.color })]); 
+                                new SWADEButtonPanelButton({ type: "consumable", items: consumableItems, color: this.color }),
+                                ...helperButtons]); 
                 }
 
                 const barItems = []
@@ -429,6 +431,104 @@ export function initConfig() {
             }
         }
 
+        class SWADEEffectsPanel extends ARGON.MAIN.ActionPanel {
+            constructor(...args) {
+                super(...args)
+                this.color = 8;
+                this.defaultStatuses=[]
+            }
+
+            get label() {
+                return "enhancedcombathud-swade.Titles.Other"
+            }
+            _getEffects() {
+                let effects = []
+                const effectActor = Array.from(this.actor.effects)
+
+                effectActor.forEach(item => {
+
+                    if(!this.defaultStatuses.includes(item.name)) {
+                        effects.push({
+                            name: item.name,
+                            type: "action",
+                            img: item.icon,
+                            system: {
+                                description:item.description,
+                            },
+                            flags: {
+                                hud: {
+                                    subtype: 'status'
+                                }
+                            }
+                        })
+                    }
+                })
+
+                const effectItems = this.actor.items.filter(item => item.type==="edge" && item.effects.size > 0)
+                effectItems.forEach(eff => {
+                    const _efItem = Array.from(eff.effects)
+                    _efItem.forEach(item=>{
+                        if(!this.defaultStatuses.includes(item.name)) {
+                            effects.push({
+                                name: item.name,
+                                type: "action",
+                                img: item.icon,
+                                system: {
+                                    description:item.description,
+                                },
+                                flags: {
+                                    hud: {
+                                        subtype: 'status'
+                                    }
+                                }
+                            })
+                        }
+                    })
+                })
+
+                return effects
+
+            }
+            _getStatuses() {
+                let statuses = []
+                let default_statuses = []
+                CONFIG.statusEffects.forEach( item => {
+                    if(item.id != 'prone')
+                        default_statuses.push(game.i18n.localize(item.label))
+                }) 
+                // cssClass: this.actor.statuses.has(_status.toLowerCase()) ? "toggle active" : "togle",
+                default_statuses.forEach(_status => {
+                    this.defaultStatuses.push(_status)
+                    statuses.push(
+                        {
+                            name: _status,
+                            type: "action",
+                            img: CONFIG.statusEffects.find((el) => el.id ===_status.toLowerCase())?.icon ?? null,
+                            system: {
+                                description: CONFIG.statusEffects.find((el) => el.id ===_status.toLowerCase())?.description ?? _status,
+                            },
+                            flags: {
+                                hud: {
+                                    subtype: 'status'
+                                }
+                            }
+                        }
+                    )
+                })
+                return statuses
+    
+    
+            }
+
+            async _getButtons() {
+                const buttons = []
+                buttons.push(new SWADEButtonPanelButton({ type: "statuses", items: this._getStatuses(), color: this.color }))
+                buttons.push(new SWADEButtonPanelButton({ type: "effects", items: this._getEffects(), color: this.color }))
+                
+                
+                return buttons;
+            }
+        }
         class SWADEFreeActionPanel extends ARGON.MAIN.ActionPanel {
             constructor(...args) {
                 super(...args);
@@ -436,7 +536,7 @@ export function initConfig() {
             }
 
             get label() {
-                return game.i18n.localize("enhancedcombathud-swade.combatHelper.freeActions.name");
+                return "enhancedcombathud-swade.Titles.FreeActions";
             }
 
             get maxActions() {
@@ -455,8 +555,17 @@ export function initConfig() {
             async _getButtons() {
                 const buttons = [new SWADEItemButton({ item: null, isWeaponSet: true, isPrimary: false })];
                 const helperButtons = !HelperFreeButtons.length ? [] : [new SWADEButtonPanelButton({ type: "helpFreeActions", items: HelperFreeButtons, color: this.color })];
+                const effect = CONFIG.statusEffects.filter(item => item.id==="prone")
+                if(effect.length) {
+                    ECHItems["prone"].system.description = remove_tags(effect[0].description);
+                }
+
                 const button = new SWADESpecialActionButton(ECHItems["prone"], this.color)
                 buttons.push(button)
+                
+                ECHItems["run"].img = "systems/swade/assets/dice/d"+this.actor.system.stats.speed.runningDie+"-grey.svg"
+                const button2 = new SWADESpecialActionButton(ECHItems["run"], this.color)
+                buttons.push(button2)
 
                 const barItems = []
                 buttons.push(...condenseItemButtons(barItems), ...helperButtons);
@@ -484,7 +593,6 @@ export function initConfig() {
             }
 
             get label() {
-                console.log(this.item)
                 if(this.item.name) return this.item.name
                 return "NONE";
             }
@@ -520,9 +628,36 @@ export function initConfig() {
                 return tooltipData;
             }
 
+            async _toggleStatus(event, actionId) {
+                if(event != "effects") {
+                    const existsOnActor = this.token.actor.statuses.has(actionId.toLowerCase())
+                    const data = game.swade.util.getStatusEffectDataById(actionId.toLowerCase());
+                    data["flags.core.statusId"] = actionId.toLowerCase();
+                    await this.token.toggleEffect(data, { active: !existsOnActor });
+                    
+                } else {
+                    let effect = this.token.actor.effects.filter(el => el.id === actionId)
+                    if(effect.length == 0) {
+                        const items = Array.from(this.actor.items.filter(it => ['edge', 'hindrance', 'ability'].includes(it.type)))
+                        items.forEach(async (item) => {
+                            let _eff = item.effects.filter(el => el.id === actionId)
+                            if(_eff.length > 0) 
+                                await _eff[0].update({ disabled: !_eff[0].disabled })
+                        })
+                    } else {
+                        await this.token.actor.effects.filter(el => el.id === actionId)[0].update({ disabled: !effect[0].disabled })
+                    }
+    
+                    
+                }
+            }
+
             async _onLeftClick(event) {
                 ui.ARGON.interceptNextDialog(event.currentTarget);
                 if(this.item?.flags?.hud?.subtype == "helper") return
+                else if(this.item?.flags?.hud?.subtype == "status") {
+                    this._toggleStatus(event, this.item.name)
+                }
                 await this.item.show();
             }
 
@@ -597,6 +732,12 @@ export function initConfig() {
                     case "helpMainActions":
                     case "helpFreeActions":
                         return "enhancedcombathud-swade.Titles.HelpMe";
+                    case "statuses":
+                        return "Status"
+                    case "effects":
+                        return "Effects"
+                    default:
+                        return "Missing Config"
 
                 }
                 return this.name
@@ -617,6 +758,9 @@ export function initConfig() {
                     case "helpMainActions":
                     case "helpFreeActions":
                         return `${MODULE_FOLDER}assets/icons/question_mark.svg`;
+                    case "statuses":
+                    case "effects":
+                        return "systems/swade/assets/icons/active-effect.svg"
                 }
 
             }
@@ -634,7 +778,6 @@ export function initConfig() {
                 if (this.type === "spell") {
                     return new ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanel({ id: this.id, accordionPanelCategories: this._spells.map(({ label, buttons, uses }) => new ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanelCategory({ label, buttons, uses })) });
                 } else {
-                    console.log("CONSUMABLES")
                     return new ARGON.MAIN.BUTTON_PANELS.ButtonPanel({ id: this.id, buttons: this.items.map((item) => new SWADEItemButton({ item })) });
                 }
             }
@@ -657,6 +800,7 @@ export function initConfig() {
             }
 
             get movementMax() {
+                if(RUNNING) return RUNNING / canvas.scene.dimensions.distance;
                 return this.actor.system.stats.speed.value / canvas.scene.dimensions.distance;
             }
         }
@@ -727,8 +871,13 @@ export function initConfig() {
             }
 
             async _onLeftClick(event) {
-                if(this.item.name.toLowerCase() == "prone")
+                if(this.item.name.toLowerCase() == "prone") {
                     this._toggleStatus(event, this.item.name)
+                } else if(this.item.name.toLowerCase() == "run") {
+                    const resulta = await this.actor.rollRunningDie();
+                    RUNNING = resulta.total;
+                    ui.ARGON.components.movement.updateMovement();
+                }
                 else if(this.item.type == "action") {
                     switch (this.item?.flags?.hud?.subtype) {
                         case "addbennie":
@@ -815,7 +964,7 @@ export function initConfig() {
 
         CoreHUD.definePortraitPanel(SWADEPortraitPanel);
         CoreHUD.defineDrawerPanel(SWADEDrawerPanel);
-        CoreHUD.defineMainPanels([SWADEActionActionPanel, SWADEFreeActionPanel, ARGON.PREFAB.PassTurnPanel]);
+        CoreHUD.defineMainPanels([SWADEActionActionPanel,  SWADEFreeActionPanel,SWADEEffectsPanel, ARGON.PREFAB.PassTurnPanel]);
         CoreHUD.defineMovementHud(SWADEMovementHud);
         CoreHUD.defineWeaponSets(SWADEWeaponSets);
         CoreHUD.defineSupportedActorTypes(["character", "npc"]);
@@ -824,7 +973,7 @@ export function initConfig() {
 
 function registerCombatHelpers() {
     const freeActions = ["move", "run", "speak", "prone", "drop", "ask"]
-    const mainAction = ["attack", "aim", "defend", "grapple", "push", "reload", "support", "shot", "test"]
+    const mainAction = ["multi","attack", "aim", "defend", "grapple", "push", "reload", "support", "shot", "test"]
 
     mainAction.forEach( action => {
         const img = game.i18n.localize(`enhancedcombathud-swade.combatHelper.mainActions.${action}.img`);
@@ -1205,11 +1354,14 @@ function registerItems() {
         },
     };
 
+    
+    let description = "Go prone";
+   
     ECHItems["prone"] = {
         name: "Prone",
-        description: "go prone",
+        description: description,
         type: "action",
-        img: "systems/swade/assets/bennie.webp",
+        img: CONFIG.statusEffects.find((el) => el.id ==="prone")?.icon ?? null,
         system: {
             type: {
                 value: "",
@@ -1299,6 +1451,72 @@ function registerItems() {
             "midi-qol": {
                 onUseMacroName: "",
             },
+        },
+    };
+
+    ECHItems["run"] = {
+        name: "run",
+        description: "Running die",
+        type: "action",
+        img: MODULE_FOLDER+"/assets/icons/run.svg",
+        system: {
+            type: {
+                value: "",
+                subtype: ""
+            },
+            description: "Run",
+            source: "",
+            quantity: 1,
+            weight: 0,
+            price: 0,
+            attuned: false,
+            attunement: 0,
+            equipped: false,
+            rarity: "",
+            identified: true,
+            activation: {
+                type: "action",
+                cost: 1,
+                condition: "",
+            },
+            duration: {
+                value: 1,
+                units: "turn",
+            },
+            target: {
+                value: null,
+                width: null,
+                units: "",
+                type: "self",
+            },
+            range: {
+                value: null,
+                long: null,
+                units: "",
+            },
+            consume: {
+                type: "",
+                target: "",
+                amount: null,
+            },
+            ability: "",
+            actionType: "util",
+            attackBonus: 0,
+            chatFlavor: "",
+            critical: null,
+            damage: 0,
+            formula: "",
+        },
+        
+        sort: 0,
+        flags: {
+            core: {
+                sourceId: "Item.wyQkeuZkttllAFB2",
+            },
+
+            hud: {
+                subtype: "running"
+            }
         },
     };
 }
