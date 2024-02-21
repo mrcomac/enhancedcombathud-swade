@@ -1,10 +1,12 @@
 import { MODULE_ID } from "./main.js";
 import {capitalize_first_letter, remove_tags} from './utils.js'
+import { SWADERollHandler, SWADEToolsRollHandler } from './roll.js'
 
 const ECHItems = {};
 const HelperMainButtons = []
 const HelperFreeButtons = []
 const MODULE_FOLDER= "modules/enhancedcombathud-swade/"
+let rollhandler = {}
 let RUNNING = 0
 export function initConfig() {
 
@@ -37,6 +39,15 @@ export function initConfig() {
             HelperMainButtons,
             HelperFreeButtons,
         };
+        let isSwadeToolsEnabled = game.modules.get("swade-tools")?.active || false;
+        if(isSwadeToolsEnabled) {
+            console.log("SWADE TOOLS TAA")
+            rollhandler = new SWADEToolsRollHandler()
+        } else {
+            console.log("SWADE TOOLS TAA FAlse")
+            rollhandler = new SWADERollHandler()
+        }
+        
 
 
         async function getTooltipDetails(item, type) {
@@ -185,7 +196,8 @@ export function initConfig() {
             }
 
             async _onDeathSave(event) {
-                this.actor.rollAttribute("vigor", { event })
+                rollhandler.roll(this.token, event, "attribute", "vigor")
+                //this.actor.rollAttribute("vigor", { event })
             }
 
             async getStatBlocks() {
@@ -279,12 +291,13 @@ export function initConfig() {
                         [
                             {
                                 label: capitalize_first_letter(ability),
-                                onClick: (event) => this.actor.rollAttribute(ability, { event }),
+                                onClick: (event) => rollhandler.roll(this.token, event, "attribute", ability),
                             },
                             {
                                 label: `<span class="d${abilityData.die.sides} dice"></span>`,
                                 style: "display: flex; justify-content: flex-end;",
-                                onClick: (event) => this.actor.rollAttribute(ability, { event }),
+                                onClick: (event) => rollhandler.roll(this.token, event, "attribute", ability),
+                                //onclick: (event) => rollhandler.roll(this.token, event, "attribute", ability),
                             },
                         ],
                         ability,
@@ -298,12 +311,13 @@ export function initConfig() {
                         [
                             {
                                 label: skillData.name + `(${skillData.system.attribute})`,
-                                onClick: (event) => this.actor.rollSkill(skillData.id, { event }),
+                                onClick: (event) => rollhandler.roll(this.token, event, "skill", skillData)
+                                //onClick: (event) => this.actor.rollSkill(skillData.id, { event }),
                             },
                             {
                                 label: `<span class="d${skillData.system.die.sides} dice"></span>`,
                                 style: "display: flex; justify-content: flex-end;",
-                                onClick: (event) => this.actor.rollAttribute(ability, { event }),
+                                onClick: (event) => rollhandler.roll(this.token, event, "skill", skillData)
                             },
                         ],
                         skillData,
@@ -655,10 +669,13 @@ export function initConfig() {
             async _onLeftClick(event) {
                 ui.ARGON.interceptNextDialog(event.currentTarget);
                 if(this.item?.flags?.hud?.subtype == "helper") return
-                else if(this.item?.flags?.hud?.subtype == "status") {
-                    this._toggleStatus(event, this.item.name)
+                if(this.item?.flags?.hud?.subtype == "status") {
+                    //this._toggleStatus(event, this.item.name)
+                    rollhandler.roll(this.token, event, "status", this.item)
+                } else {
+                    rollhandler.roll(this.token, event, "show", this.item)
+                    //await this.item.show();
                 }
-                await this.item.show();
             }
 
             async _onRightClick(event) {
@@ -769,7 +786,8 @@ export function initConfig() {
                 if(this.item?.flags?.hud?.subtype == "help") {
                     return
                 } else {
-                    this.item.show()
+                    rollhandler.roll(this.token, event, "show", this.item)
+                    //this.item.show()
                 }
                 
             }
@@ -874,24 +892,30 @@ export function initConfig() {
                 if(this.item.name.toLowerCase() == "prone") {
                     this._toggleStatus(event, this.item.name)
                 } else if(this.item.name.toLowerCase() == "run") {
-                    const resulta = await this.actor.rollRunningDie();
-                    RUNNING = resulta.total;
+                    const runtotal = await rollhandler.roll(this.token, event, "runningDie", this.item)
+                    console.log(runtotal)
+                    //const resulta = await this.actor.rollRunningDie();
+                    RUNNING = runtotal.total;
                     ui.ARGON.components.movement.updateMovement();
                 }
                 else if(this.item.type == "action") {
                     switch (this.item?.flags?.hud?.subtype) {
                         case "addbennie":
-                            this._adjustBennies(event, "give")
+                            rollhandler.roll(this.token, event, "benny", "give")
+                            //this._adjustBennies(event, "give")
                             break
                         case "spendbennie":
-                            this._adjustBennies(event, "spend")
+                            rollhandler.roll(this.token, event, "benny", "spend")
+                            //this._adjustBennies(event, "spend")
                             break
                         default:
-                            this.item.show()
+                            rollhandler.roll(this.token, event, "show", this.item)
+                            //this.item.show()
 
                     }
                 } else {
-                    this.item.show()
+                    rollhandler.roll(this.token, event, "show", this.item)
+                    //this.item.show()
                 }                
             }
         }
