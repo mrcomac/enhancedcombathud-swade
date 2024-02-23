@@ -41,10 +41,8 @@ export function initConfig() {
         };
         let isSwadeToolsEnabled = game.modules.get("swade-tools")?.active || false;
         if(isSwadeToolsEnabled) {
-            console.log("SWADE TOOLS TAA")
             rollhandler = new SWADEToolsRollHandler()
         } else {
-            console.log("SWADE TOOLS TAA FAlse")
             rollhandler = new SWADERollHandler()
         }
         
@@ -390,18 +388,28 @@ export function initConfig() {
 
             async _getButtons() {
                 const spellItems = this.actor.items.filter((item) => item.type === "power");
-                const generalactionsItems = this.actor.items.filter((item) => item.type === "action");
+                const generalactionsItems = this.actor.items.filter((item) => item.type === "action" &&  !["disarm", "jump", "grapple", "push"].includes(item.name.toLowerCase()));
                 const featItems = [] 
                 const consumableItems = this.actor.items.filter((item) => item.type === "consumable" && item.system.subtype === "regular");
 
                 const actionButton = !generalactionsItems ? [] : [new SWADEButtonPanelButton({ type: "action", items: generalactionsItems, color: this.color })];
                 const spellButton = !spellItems.length ? [] : [new SWADEButtonPanelButton({ type: "power", items: spellItems, color: this.color })];
                 const helperButtons = !HelperMainButtons.length ? [] : [new SWADEButtonPanelButton({ type: "helpMainActions", items: HelperMainButtons, color: this.color })];
-
                 const specialActions = Object.values(ECHItems);
 
-                const defaultActions =  this.actor.items.filter((item) => item.type === "action" && ["disarm", "jump", "grapple", "push"].indexOf(item.name.toLowerCase())> -1);
+                const defaultActions =  this.actor.items.filter((item) => item.type === "action" && ["disarm", "jump", "grapple", "push"].includes(item.name.toLowerCase()));
+                let splitButtons = []
+                if(defaultActions.length == 4) {
 
+                    splitButtons.push(new ARGON.MAIN.BUTTONS.SplitButton(
+                        new SWADESpecialActionButton(defaultActions[0], this.color),
+                        new SWADESpecialActionButton(defaultActions[1], this.color)
+                        ))
+                    splitButtons.push(new ARGON.MAIN.BUTTONS.SplitButton(
+                        new SWADESpecialActionButton(defaultActions[2], this.color),
+                        new SWADESpecialActionButton(defaultActions[3], this.color))
+                    )
+                }
                 const buttons = [];
                 let bennieButtons = []
 
@@ -416,27 +424,15 @@ export function initConfig() {
                     }
 
                 }
-                if (defaultActions.length == 4) {
+                
                 buttons.push(...[new SWADEItemButton({ item: null, isWeaponSet: true, isPrimary: true }), 
                                  ...bennieButtons,
                                  ...spellButton,
-                                 new ARGON.MAIN.BUTTONS.SplitButton(
-                                    new SWADESpecialActionButton(defaultActions[0], this.color),
-                                    new SWADESpecialActionButton(defaultActions[1]), this.color),
-                                 new ARGON.MAIN.BUTTONS.SplitButton(
-                                    new SWADESpecialActionButton(defaultActions[2], this.color),
-                                    new SWADESpecialActionButton(defaultActions[3]), this.color),
+                                 ...splitButtons,
+                                ...actionButton,
                                 new SWADEButtonPanelButton({ type: "consumable", items: consumableItems, color: this.color }),
                                 ...helperButtons
                             ]);
-                } else {
-                    buttons.push(...[new SWADEItemButton({ item: null, isWeaponSet: true, isPrimary: true }),
-                                ...bennieButtons,
-                                ...spellButton,
-                                ...actionButton,
-                                new SWADEButtonPanelButton({ type: "consumable", items: consumableItems, color: this.color }),
-                                ...helperButtons]); 
-                }
 
                 const barItems = []
                 buttons.push(...condenseItemButtons(barItems));
@@ -463,6 +459,7 @@ export function initConfig() {
 
                     if(!this.defaultStatuses.includes(item.name)) {
                         effects.push({
+                            id: item.id,
                             name: item.name,
                             type: "action",
                             img: item.icon,
@@ -471,7 +468,7 @@ export function initConfig() {
                             },
                             flags: {
                                 hud: {
-                                    subtype: 'status'
+                                    subtype: "effect"
                                 }
                             }
                         })
@@ -642,36 +639,15 @@ export function initConfig() {
                 return tooltipData;
             }
 
-            async _toggleStatus(event, actionId) {
-                if(event != "effects") {
-                    const existsOnActor = this.token.actor.statuses.has(actionId.toLowerCase())
-                    const data = game.swade.util.getStatusEffectDataById(actionId.toLowerCase());
-                    data["flags.core.statusId"] = actionId.toLowerCase();
-                    await this.token.toggleEffect(data, { active: !existsOnActor });
-                    
-                } else {
-                    let effect = this.token.actor.effects.filter(el => el.id === actionId)
-                    if(effect.length == 0) {
-                        const items = Array.from(this.actor.items.filter(it => ['edge', 'hindrance', 'ability'].includes(it.type)))
-                        items.forEach(async (item) => {
-                            let _eff = item.effects.filter(el => el.id === actionId)
-                            if(_eff.length > 0) 
-                                await _eff[0].update({ disabled: !_eff[0].disabled })
-                        })
-                    } else {
-                        await this.token.actor.effects.filter(el => el.id === actionId)[0].update({ disabled: !effect[0].disabled })
-                    }
-    
-                    
-                }
-            }
-
             async _onLeftClick(event) {
                 ui.ARGON.interceptNextDialog(event.currentTarget);
                 if(this.item?.flags?.hud?.subtype == "helper") return
                 if(this.item?.flags?.hud?.subtype == "status") {
                     //this._toggleStatus(event, this.item.name)
                     rollhandler.roll(this.token, event, "status", this.item)
+                } if(this.item?.flags?.hud?.subtype == "effect") {
+                    //this._toggleStatus(event, this.item.name)
+                    rollhandler.roll(this.token, event, "effect", this.item)
                 } else {
                     rollhandler.roll(this.token, event, "show", this.item)
                     //await this.item.show();
@@ -716,7 +692,10 @@ export function initConfig() {
             }
 
             get quantity() {
-                return null;
+                if(this.item?.range) {
+                    return this.item.system.currentShots
+                }
+                return null
             }
         }
 
@@ -739,11 +718,12 @@ export function initConfig() {
             get label() {
                 switch (this.type) {
                     case "power":
-                        return "SWADE.Pow";
+
+                        return game.i18n.localize("SWADE.Pow") + `<br /> ${this.actor.system.powerPoints.general.value} / ${this.actor.system.powerPoints.general.max}`;
                     case "consumable":
                         return "enhancedcombathud-swade.Buttons.useItem.name";
                     case "action":
-                        return "enhancedcombathud-swade.Titles.OtherActions";
+                        return "enhancedcombathud-swade.Titles.Actions";
                     case "run":
                         return "enhancedcombathud-swade.Titles.Run";
                     case "helpMainActions":
@@ -787,12 +767,12 @@ export function initConfig() {
                     return
                 } else {
                     rollhandler.roll(this.token, event, "show", this.item)
-                    //this.item.show()
                 }
                 
             }
 
             async _getPanel() {
+                this._spells = []
                 if (this.type === "spell") {
                     return new ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanel({ id: this.id, accordionPanelCategories: this._spells.map(({ label, buttons, uses }) => new ARGON.MAIN.BUTTON_PANELS.ACCORDION.AccordionPanelCategory({ label, buttons, uses })) });
                 } else {
@@ -818,7 +798,7 @@ export function initConfig() {
             }
 
             get movementMax() {
-                if(RUNNING) return RUNNING / canvas.scene.dimensions.distance;
+                if(RUNNING != 0 ) return RUNNING / canvas.scene.dimensions.distance;
                 return this.actor.system.stats.speed.value / canvas.scene.dimensions.distance;
             }
         }
@@ -856,46 +836,21 @@ export function initConfig() {
                 return tooltipData;
             }
 
-            async _toggleStatus(event, actionId) {
-                if(event != "effects") {
-                    const existsOnActor = this.token.actor.statuses.has(actionId.toLowerCase())
-                    const data = game.swade.util.getStatusEffectDataById(actionId.toLowerCase());
-                    data["flags.core.statusId"] = actionId.toLowerCase();
-                    await this.token.toggleEffect(data, { active: !existsOnActor });
-                    
-                } else {
-                    let effect = this.token.actor.effects.filter(el => el.id === actionId)
-                    if(effect.length == 0) {
-                        const items = Array.from(this.actor.items.filter(it => ['edge', 'hindrance', 'ability'].includes(it.type)))
-                        items.forEach(async (item) => {
-                            let _eff = item.effects.filter(el => el.id === actionId)
-                            if(_eff.length > 0) 
-                                await _eff[0].update({ disabled: !_eff[0].disabled })
-                        })
-                    } else {
-                        await this.token.actor.effects.filter(el => el.id === actionId)[0].update({ disabled: !effect[0].disabled })
-                    }
-    
-                    
-                }
-            }
-           
-            _adjustBennies(event, actionId) {
-                if (actionId === "spend") {
-                    this.token.actor.spendBenny()
-                } else if (actionId === "give") {
-                    this.token.actor.getBenny()
-                }
-            }
-
             async _onLeftClick(event) {
                 if(this.item.name.toLowerCase() == "prone") {
-                    this._toggleStatus(event, this.item.name)
+                    if(RUNNING == 0)
+                        RUNNING = this.actor.system.stats.speed.value-2
+                    else 
+                        RUNNING -= 2
+                    ui.ARGON.components.movement.updateMovement();
+                    rollhandler.roll(this.token, event, "status", this.item)
+                    //this._toggleStatus(event, this.item.name)
                 } else if(this.item.name.toLowerCase() == "run") {
                     const runtotal = await rollhandler.roll(this.token, event, "runningDie", this.item)
-                    console.log(runtotal)
-                    //const resulta = await this.actor.rollRunningDie();
-                    RUNNING = runtotal.total;
+                    if(RUNNING == 0)
+                        RUNNING = runtotal.total;
+                    else
+                        RUNNING = runtotal.total - (this.actor.system.stats.speed.value - RUNNING)
                     ui.ARGON.components.movement.updateMovement();
                 }
                 else if(this.item.type == "action") {

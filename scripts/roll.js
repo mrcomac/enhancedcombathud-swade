@@ -4,7 +4,6 @@ export class SWADERollHandler {
     }
 
     async roll(token, event, itemType, item) {
-        console.log("ROLLL")
         this.actor = token.actor
         this.token = token
         switch (itemType) {
@@ -22,7 +21,6 @@ export class SWADERollHandler {
                 break;
             case "effect":
             case "status":
-                console.log("STATUS")
                 await this._toggleStatus(event, itemType, item);
                 break;
             case "benny":
@@ -45,7 +43,6 @@ export class SWADERollHandler {
     }
 
     async _toggleStatus(event, itemType, item) {
-        console.log(item)
         if(itemType != "effect") {
             const existsOnActor = this.token.actor.statuses.has(item.name.toLowerCase())
             const data = game.swade.util.getStatusEffectDataById(item.name.toLowerCase());
@@ -64,15 +61,13 @@ export class SWADERollHandler {
             } else {
                 await this.token.actor.effects.filter(el => el.id === item.id)[0].update({ disabled: !effect[0].disabled })
             }
-
-            
         }
     }
 
     _adjustBennies(event, itemType, item) {
-        if (itemType === "spend") {
+        if (item === "spend") {
             this.actor.spendBenny()
-        } else if (itemType === "give") {
+        } else if (item === "give") {
             this.actor.getBenny()
         }
     }
@@ -98,21 +93,11 @@ export class SWADEToolsRollHandler extends SWADERollHandler {
 
     /** @override */
     async _rollAttribute(event, itemType, item) {
-        console.log("ROLA")
         await game.swadetools.attribute(this.token.actor,item)
     }
 
     /** @override */
     async _rollSkill(event, itemType, item) {
         await game.swadetools.skill(this.actor,item.id)
-    }
-
-    /** @override */
-    async _run() {
-        await game.swadetools.run(this.token.actor)
-    }
-
-    async _run() {
-        return await game.swadetools.run(this.token.actor)
     }
 }
