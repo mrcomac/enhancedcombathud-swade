@@ -1,17 +1,25 @@
 {
 	"enhancedcombathud-swade": {
 	  "combatHelper": {
+		"status": {
+			"bound": "Cannot move, cannot do other physical actions except trying to break free, DISTRACTED and VULNERABLE as long as they remain Bound. Use an action to roll Athletics (or Strength -2) and become ENTANGLED with a success, or break free with a raise (p. 98). The grappler is VULNERABLE so long as they maintain the bind.",
+			"entangled": "-2 to the character’s roll until the end of their next turn (p. 100).",
+			"distracted": "Cannot move and is DISTRACTED as long as they remain Entangled. Use an action to roll Athletics (or Strength -2) and break free (p. 98).",
+			"prone": "-2 Parry, -2 Fighting, -4 to be hit from range 3”+ (doesn’t stack with COVER), -4 damage from attack with Area of Effects, use 2” of Pace to crawl 1” or to stand up (p. 104).",
+			"shaken": "Can only perform free actions (including normal movement, plus eventually running). Recover from being SHAKEN as free action with a Spirit roll at the start of the character’s turn (p. 94).",
+			"stunned": "Can’t move nor take actions, is PRONE. DISTRACTED for one turn. VULNERABLE until a Vigor roll is made. Success means VULNERABLE for one more turn, raise no ill effects. (p. 106)."
+		},
 		"freeActions": {
 		  "name": "Free Actions",
-		  "description": "You can perform many actions are needed",
+		  "description": "You can perform many actions are needed.",
 		  "move": {
 			"name": "Move",
-			"description": "Move up to your Pace in inches, up to once per turn",
+			"description": "Move up to your Pace in inches, up to once per turn. You don't need to move all at once, you can split it.",
 			"img": "/assets/icons/move.svg"
 		  },
 		  "run": {
 			"name": "Run",
-			"description": "Run up to once per turn, up to the result of your Running die. Other actions this turn get -2.",
+			"description": "Run up to once per turn, up to the result of your Running die. Other actions this turn get -2. You have to call this out at the beginning of your turn.",
 			"img": "/assets/icons/run.svg"
 		  },
 		  "speak": {
@@ -21,12 +29,12 @@
 		  },
 		  "prone": {
 			"name": "Go Prone",
-			"description": "Go Prone to become harder to hit at range. Standing costs 2 points of Pace for that turn.",
+			"description": "PRONE is a -4 COVER against ranged attacks from 3”+.",
 			"img": "/assets/icons/drop.svg"
 		  },
 		  "drop": {
 			"name": "Drop",
-			"description": "Drop an item. Throwing usually requires an attack.",
+			"description": "You can drop an item.",
 			"img": "/assets/icons/drop.svg"
 		  },
 		  "ask": {
@@ -37,55 +45,65 @@
 		},
 		"mainActions": {
 		  "name": "Actions",
-		  "description": "Main actions can be up to 3 with penalties. <br />You may take up to two extra Actions per round. You must declare all actions before rolling. Each additionalAction causes a -2 penalty to all your Actions that turn.",
+		  "description": "",
 		  "multi": {
 			"name": "Multi-Action",
-			"description": "You may take up to two extra Actions per round. You must declare all actions before rolling. Each additionalAction causes a -2 penalty to all your Actions that turn.",
+			"description": "You can make up to 3 actions in one turn. Two actions: -2. Three actions: -4",
 			"img": "/assets/icons/swords.svg"
 		  },
 		  "attack": {
 			"name": "Attack",
-			"description": "Attack a target with a weapon, casting a power or with our own body (hands, feet).",
+			"description": "You can attack an enemy with a melee or ranged weapon.",
+			"img": "/assets/icons/swords.svg"
+		  },
+		  "wildAttack": {
+			"name": "Wild Attack",
+			"description": "+2 Fighting, +2 melee damage, but you are now VULNERABLE.",
+			"img": "/assets/icons/swords.svg"
+		  },
+		  "desperateAttack": {
+			"name": "Desperate Attack",
+			"description": "+2 or +4 Fighting, -2 or -4 melee damage.",
 			"img": "/assets/icons/swords.svg"
 		  },
 		  "shot": {
-			"name": "Shot",
-			"description": "Call your shot. Target a body part or weapon, at a penalty to hit. The GM will tell you how difficult your shot will be.",
+			"name": "Called Shot",
+			"description": "Limb: -2 (may DISARM, see page 100); Hand: -4 (may DISARM), Head/Vitals: -4 (+4 damage), Unarmored Area: -? (damage ignores Armor).",
 			"img": "/assets/icons/target.svg"
 		  },
 		  "push": {
 			"name": "Push",
-			"description": "Push an enemy in melee range up to 1\", or 2\" on a raise. Get a run up to push farther!",
+			"description": "Opposed Strength or Athletics (each one chooses) roll (+2 if moved 2” before pushing, +Shield Parry Bonus): push 1”, 2” with a raise. The foe also rolls Athletics (-2 if the pusher raised) to avoid falling PRONE.",
 			"img": "/assets/icons/push.svg"
 		  },
 		  "grapple": {
 			"name": "Grapple",
-			"description": "Grapple an enemy in melee range to make them Entangled, or Bound on a raise (see conditions). You can make Strength rolls to crush them on future turns.",
+			"description": "Opposed Athletics roll to ENTANGLE the target, or to BOUND (in this case the grappler is also VULNERABLE) with a raise .",
 			"img": "/assets/icons/grapple.svg"
 		  },
 		  "defend": {
 			"name": "Defend",
-			"description": "Defend yourself. Increase your Parry by +4 until next turn. Cannot be a Multi-Action",
+			"description": "Use the entire turn to DEFEND and gain +4 Parry. You can move up to your Pace (but not run), or stand still to avoid free attacks (see below).",
 			"img": "/assets/icons/defend.svg"
 		  },
 		  "test": {
 			"name": "Test",
-			"description": "Test one enemy you can reasonably taunt, trip, or harass. Win an opposed roll to make them Distracted or Vulnerable.",
+			"description": "Describe a TEST and roll a relevant Skill against the foe’s linked Attribute. Success: the foe is DISTRACTED or VULNERABLE, your choice. Raise: the foe is also SHAKEN.",
 			"img": "/assets/icons/test.svg"
 		  },
 		  "support": {
 			"name": "Support",
-			"description": "Support one ally you can reasonably help. Declare which Skill you are using to help, and which of the ally's Traits you are trying to raise.",
+			"description": "Describe how you help your ally’s Trait and roll your relevant Skill to give them +1 with a success, +2 with a raise (max +4).",
 			"img": "/assets/icons/support.svg"
 		  },
 		  "aim": {
 			"name": "Aim",
-			"description": "Aim at a specific target. If you do nothing else this turn, you can ignore up to -4 of penalties, or get a +2 to hit that target, next turn.",
+			"description": "Spend the entire turn (movement included) to lower by up to 4 points of penalties (from COVER, CALLED SHOT, Range…) OR add +2 to the first ranged attack of the next round.",
 			"img": "/assets/icons/aim.svg"
 		  },
 		  "reload": {
 			"name": "Reload",
-			"description": "Reload your weapon. Weapons with Reload X require X actions to reload.",
+			"description": "",
 			"img": "/assets/icons/reload.svg"
 		  }
 		}
