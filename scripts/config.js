@@ -754,7 +754,7 @@ export function initConfig() {
                         return "systems/swade/assets/icons/edge.svg";
                     case "helpMainActions":
                     case "helpFreeActions":
-                        return `${MODULE_FOLDER}assets/icons/question_mark.svg`;
+                        return '../../../systems/swade/assets/icons/skill.svg';
                     case "statuses":
                     case "effects":
                         return "systems/swade/assets/icons/active-effect.svg"
