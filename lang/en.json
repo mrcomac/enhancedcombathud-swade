@@ -1,5 +1,5 @@
 {
-	"enhancedcombathud-swade-dev": {
+	"enhancedcombathud-swade": {
 	  "combatHelper": {
 		"status": {
 			"bound": "Cannot move, cannot do other physical actions except trying to break free, DISTRACTED and VULNERABLE as long as they remain Bound. Use an action to roll Athletics (or Strength -2) and become ENTANGLED with a success, or break free with a raise (p. 98). The grappler is VULNERABLE so long as they maintain the bind.",
