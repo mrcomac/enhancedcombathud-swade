@@ -1,5 +1,5 @@
 {
-	"enhancedcombathud-swade": {
+	"enhancedcombathud-swade-dev": {
 	  "combatHelper": {
 		"status": {
 			"bound": "Cannot move, cannot do other physical actions except trying to break free, DISTRACTED and VULNERABLE as long as they remain Bound. Use an action to roll Athletics (or Strength -2) and become ENTANGLED with a success, or break free with a raise (p. 98). The grappler is VULNERABLE so long as they maintain the bind.",
@@ -15,32 +15,32 @@
 		  "move": {
 			"name": "Move",
 			"description": "Move up to your Pace in inches, up to once per turn. You don't need to move all at once, you can split it.",
-			"img": "/assets/icons/move.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "run": {
 			"name": "Run",
 			"description": "Run up to once per turn, up to the result of your Running die. Other actions this turn get -2. You have to call this out at the beginning of your turn.",
-			"img": "/assets/icons/run.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "speak": {
 			"name": "Speak",
 			"description": "Speak one or two short sentences.",
-			"img": "/assets/icons/speak.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "prone": {
 			"name": "Go Prone",
 			"description": "PRONE is a -4 COVER against ranged attacks from 3”+.",
-			"img": "/assets/icons/drop.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "drop": {
 			"name": "Drop",
 			"description": "You can drop an item.",
-			"img": "/assets/icons/drop.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "ask": {
 			"name": "Not Sure",
 			"description": "Not Sure if an unusual action is free? ASk the GM.",
-			"img": "/assets/icons/ask.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  }
 		},
 		"mainActions": {
@@ -49,62 +49,62 @@
 		  "multi": {
 			"name": "Multi-Action",
 			"description": "You can make up to 3 actions in one turn. Two actions: -2. Three actions: -4",
-			"img": "/assets/icons/swords.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "attack": {
 			"name": "Attack",
 			"description": "You can attack an enemy with a melee or ranged weapon.",
-			"img": "/assets/icons/swords.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "wildAttack": {
 			"name": "Wild Attack",
 			"description": "+2 Fighting, +2 melee damage, but you are now VULNERABLE.",
-			"img": "/assets/icons/swords.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "desperateAttack": {
 			"name": "Desperate Attack",
 			"description": "+2 or +4 Fighting, -2 or -4 melee damage.",
-			"img": "/assets/icons/swords.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "shot": {
 			"name": "Called Shot",
 			"description": "Limb: -2 (may DISARM, see page 100); Hand: -4 (may DISARM), Head/Vitals: -4 (+4 damage), Unarmored Area: -? (damage ignores Armor).",
-			"img": "/assets/icons/target.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "push": {
 			"name": "Push",
 			"description": "Opposed Strength or Athletics (each one chooses) roll (+2 if moved 2” before pushing, +Shield Parry Bonus): push 1”, 2” with a raise. The foe also rolls Athletics (-2 if the pusher raised) to avoid falling PRONE.",
-			"img": "/assets/icons/push.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "grapple": {
 			"name": "Grapple",
 			"description": "Opposed Athletics roll to ENTANGLE the target, or to BOUND (in this case the grappler is also VULNERABLE) with a raise .",
-			"img": "/assets/icons/grapple.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "defend": {
 			"name": "Defend",
 			"description": "Use the entire turn to DEFEND and gain +4 Parry. You can move up to your Pace (but not run), or stand still to avoid free attacks (see below).",
-			"img": "/assets/icons/defend.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "test": {
 			"name": "Test",
 			"description": "Describe a TEST and roll a relevant Skill against the foe’s linked Attribute. Success: the foe is DISTRACTED or VULNERABLE, your choice. Raise: the foe is also SHAKEN.",
-			"img": "/assets/icons/test.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "support": {
 			"name": "Support",
 			"description": "Describe how you help your ally’s Trait and roll your relevant Skill to give them +1 with a success, +2 with a raise (max +4).",
-			"img": "/assets/icons/support.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "aim": {
 			"name": "Aim",
 			"description": "Spend the entire turn (movement included) to lower by up to 4 points of penalties (from COVER, CALLED SHOT, Range…) OR add +2 to the first ranged attack of the next round.",
-			"img": "/assets/icons/aim.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  },
 		  "reload": {
 			"name": "Reload",
 			"description": "",
-			"img": "/assets/icons/reload.svg"
+			"img": "systems/swade/assets/icons/skill.svg"
 		  }
 		}
 	  },
