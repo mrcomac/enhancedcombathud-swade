@@ -15,12 +15,12 @@
 		  "move": {
 			"name": "Move",
 			"description": "Move up to your Pace in inches, up to once per turn. You don't need to move all at once, you can split it.",
-			"img": "../../../icons/movement/arrow-upward-yellow.webp"
+			"img": "../../../icons/skills/movement/arrow-upward-yellow.webp"
 		  },
 		  "run": {
 			"name": "Run",
 			"description": "Run up to once per turn, up to the result of your Running die. Other actions this turn get -2. You have to call this out at the beginning of your turn.",
-			"img": "../../../icons/movement/figure-running-gray.webp"
+			"img": "../../../icons/skills/movement/figure-running-gray.webp"
 		  },
 		  "speak": {
 			"name": "Speak",
