@@ -15,32 +15,32 @@
 		  "move": {
 			"name": "Move",
 			"description": "Move up to your Pace in inches, up to once per turn. You don't need to move all at once, you can split it.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/movement/arrow-upward-yellow.webp"
 		  },
 		  "run": {
 			"name": "Run",
 			"description": "Run up to once per turn, up to the result of your Running die. Other actions this turn get -2. You have to call this out at the beginning of your turn.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/movement/figure-running-gray.webp"
 		  },
 		  "speak": {
 			"name": "Speak",
 			"description": "Speak one or two short sentences.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/trades/music-singing-voice-blue.webp"
 		  },
 		  "prone": {
 			"name": "Go Prone",
 			"description": "PRONE is a -4 COVER against ranged attacks from 3”+.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/magic/control/silhouette-fall-slip-prone.webp"
 		  },
 		  "drop": {
 			"name": "Drop",
 			"description": "You can drop an item.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/magic/movement/chevrons-down-yellow.webp"
 		  },
 		  "ask": {
 			"name": "Not Sure",
-			"description": "Not Sure if an unusual action is free? ASk the GM.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"description": "Not sure if an unusual action is free? Ask the GM.",
+			"img": "../../../icons/magic/symbols/question-stone-yellow.webp"
 		  }
 		},
 		"mainActions": {
@@ -49,62 +49,62 @@
 		  "multi": {
 			"name": "Multi-Action",
 			"description": "You can make up to 3 actions in one turn. Two actions: -2. Three actions: -4",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/melee/strikes-sword-scimitar.webp"
 		  },
 		  "attack": {
 			"name": "Attack",
 			"description": "You can attack an enemy with a melee or ranged weapon.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/melee/strike-sword-steel-yellow.webp"
 		  },
 		  "wildAttack": {
 			"name": "Wild Attack",
 			"description": "+2 Fighting, +2 melee damage, but you are now VULNERABLE.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/melee/sword-twirl--orange.webp"
 		  },
 		  "desperateAttack": {
 			"name": "Desperate Attack",
 			"description": "+2 or +4 Fighting, -2 or -4 melee damage.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/melee/maneuver-greatsword-yellow.webp"
 		  },
 		  "shot": {
 			"name": "Called Shot",
 			"description": "Limb: -2 (may DISARM, see page 100); Hand: -4 (may DISARM), Head/Vitals: -4 (+4 damage), Unarmored Area: -? (damage ignores Armor).",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/ranged/target-bullseye-arrow-blue.webp"
 		  },
 		  "push": {
 			"name": "Push",
 			"description": "Opposed Strength or Athletics (each one chooses) roll (+2 if moved 2” before pushing, +Shield Parry Bonus): push 1”, 2” with a raise. The foe also rolls Athletics (-2 if the pusher raised) to avoid falling PRONE.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/movement/arrow-upward-blue.webp"
 		  },
 		  "grapple": {
 			"name": "Grapple",
 			"description": "Opposed Athletics roll to ENTANGLE the target, or to BOUND (in this case the grappler is also VULNERABLE) with a raise .",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/social/intimidation-impressing.webp"
 		  },
 		  "defend": {
 			"name": "Defend",
 			"description": "Use the entire turn to DEFEND and gain +4 Parry. You can move up to your Pace (but not run), or stand still to avoid free attacks (see below).",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/melee/shield-block-gray-orange.webp"
 		  },
 		  "test": {
 			"name": "Test",
 			"description": "Describe a TEST and roll a relevant Skill against the foe’s linked Attribute. Success: the foe is DISTRACTED or VULNERABLE, your choice. Raise: the foe is also SHAKEN.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/social/thumbsup-approval-like.webp"
 		  },
 		  "support": {
 			"name": "Support",
 			"description": "Describe how you help your ally’s Trait and roll your relevant Skill to give them +1 with a success, +2 with a raise (max +4).",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/social/diplomacy-handshake-gray.webp"
 		  },
 		  "aim": {
 			"name": "Aim",
 			"description": "Spend the entire turn (movement included) to lower by up to 4 points of penalties (from COVER, CALLED SHOT, Range…) OR add +2 to the first ranged attack of the next round.",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"img": "../../../icons/skills/ranged/person-archery-bow-attack-orange.webp"
 		  },
 		  "reload": {
 			"name": "Reload",
-			"description": "",
-			"img": "../../../systems/swade/assets/icons/skill.svg"
+			"description": "Reload typically requires an action. The specifics can depend on the type of weapon and any modifications or Edges (character abilities) that might apply. For instance, reloading a revolver one bullet at a time would take more actions without a speed loader than reloading a magazine-fed firearm.",
+			"img": "../../../icons/weapons/ammunition/bullets-cartridge-shell-gray.webp"
 		  }
 		}
 	  },
@@ -135,7 +135,17 @@
 		"Range": "Range",
 		"Shots": "Shots",
 		"Damage":"Damage"
-		
+	  },
+	  "Icons": {
+		"action": "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
+		"helpMainActions": "icons/skills/social/wave-halt-stop.webp",
+		"helpFreeActions": "icons/skills/social/wave-halt-stop.webp",
+		"power": "icons/skills/trades/academics-book-study-runes.webp",
+       	"feat": "icons/commodities/currency/coin-embossed-sword-copper.webp",
+        "consumable": "icons/consumables/drinks/alcohol-spirits-bottle-blue.webp",
+		"run": "icons/skills/movement/figure-running-gray.webp",
+		"statuses": "icons/magic/symbols/symbol-lightning-bolt.webp",
+        "effects": "icons/skills/toxins/cauldron-bubbles-overflow-green.webp"
 	  }
 	},
 	"enhancedcombathud.themeOptions.mainAction": "Slow Action Colors",

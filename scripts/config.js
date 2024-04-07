@@ -574,7 +574,7 @@ export function initConfig() {
                 const button = new SWADESpecialActionButton(ECHItems["prone"], this.color)
                 buttons.push(button)
                 
-                ECHItems["run"].img = "systems/swade/assets/dice/d"+this.actor.system.stats.speed.runningDie+"-grey.svg"
+                ECHItems["run"].img = game.i18n.localize("enhancedcombathud-swade.Icons.run"); //"systems/swade/assets/dice/d"+this.actor.system.stats.speed.runningDie+"-grey.svg"
                 const button2 = new SWADESpecialActionButton(ECHItems["run"], this.color)
                 buttons.push(button2)
 
@@ -645,7 +645,7 @@ export function initConfig() {
                 if(this.item?.flags?.hud?.subtype == "status") {
                     //this._toggleStatus(event, this.item.name)
                     rollhandler.roll(this.token, event, "status", this.item)
-                } if(this.item?.flags?.hud?.subtype == "effect") {
+                } else if(this.item?.flags?.hud?.subtype == "effect") {
                     //this._toggleStatus(event, this.item.name)
                     rollhandler.roll(this.token, event, "effect", this.item)
                 } else {
@@ -718,7 +718,6 @@ export function initConfig() {
             get label() {
                 switch (this.type) {
                     case "power":
-
                         return game.i18n.localize("SWADE.Pow") + `<br /> ${this.actor.system.powerPoints.general.value} / ${this.actor.system.powerPoints.general.max}`;
                     case "consumable":
                         return "enhancedcombathud-swade.Buttons.useItem.name";
@@ -741,25 +740,12 @@ export function initConfig() {
             }
 
             get icon() {
-                switch (this.type) {
-                    case "power":
-                        return "modules/enhancedcombathud/icons/spell-book.webp";
-                    case "feat":
-                        return "modules/enhancedcombathud/icons/mighty-force.webp";
-                    case "consumable":
-                        return "modules/enhancedcombathud/icons/drink-me.webp";
-                    case "action":
-                        return "systems/swade/assets/icons/action.svg";
-                    case "run":
-                        return "systems/swade/assets/icons/edge.svg";
-                    case "helpMainActions":
-                    case "helpFreeActions":
-                        return '../../../systems/swade/assets/icons/skill.svg';
-                    case "statuses":
-                    case "effects":
-                        return "systems/swade/assets/icons/active-effect.svg"
-                }
+                const icon = game.i18n.localize(`enhancedcombathud-swade.Icons.${this.type}`)
 
+                if(icon.indexOf("enhancedcombathud-swade.Icons") > -1) {
+                    return "icons/svg/mystery-man.svg"
+                }
+                return icon
             }
 
             async _onLeftClick(event) {
@@ -1340,7 +1326,7 @@ function registerItems() {
         name: "Prone",
         description: description,
         type: "action",
-        img: CONFIG.statusEffects.find((el) => el.id ==="prone")?.icon ?? null,
+        img: "icons/magic/control/silhouette-fall-slip-prone.webp",
         system: {
             type: {
                 value: "",
