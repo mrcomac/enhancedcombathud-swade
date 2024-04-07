@@ -59,7 +59,7 @@
 		  "wildAttack": {
 			"name": "Wild Attack",
 			"description": "+2 Fighting, +2 melee damage, but you are now VULNERABLE.",
-			"img": "../../../icons/skills/melee/sword-twirl--orange.webp"
+			"img": "../../../icons/skills/melee/sword-twirl-orange.webp"
 		  },
 		  "desperateAttack": {
 			"name": "Desperate Attack",

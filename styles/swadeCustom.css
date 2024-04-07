@@ -1,4 +1,4 @@
-.dice {
+.dice-hud {
     margin: 0 1rem !important;
     filter: brightness(0.8) !important;
     height: 30px !important;
@@ -16,31 +16,31 @@
     float: right;
 }
 
-.d4 {
+.d4-hud {
     
     background: url('../../../systems/swade/assets/dice/d4-grey.svg') !important;
     background-repeat: no-repeat !important;
     background-size: 30px 30px !important;
 }
     
-.d6 {
+.d6-hud {
     background: url('../../../systems/swade/assets/dice/d6-grey.svg');
     background-repeat: no-repeat;
     background-size: contain;
 }
-.d8 {
+.d8-hud {
     background: url('../../../systems/swade/assets/dice/d8-grey.svg');
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.d10 { 
+.d10-hud { 
     background: url('../../../systems/swade/assets/dice/d10-grey.svg');
     background-repeat: no-repeat;
     background-size: contain;
 }
 
-.d12 {
+.d12-hud {
     background: url('../../../systems/swade/assets/dice/d12-grey.svg');
     background-repeat: no-repeat;
     background-size: contain;

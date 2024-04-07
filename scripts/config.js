@@ -292,7 +292,7 @@ export function initConfig() {
                                 onClick: (event) => rollhandler.roll(this.token, event, "attribute", ability),
                             },
                             {
-                                label: `<span class="d${abilityData.die.sides} dice"></span>`,
+                                label: `<span class="d${abilityData.die.sides}-hud dice-hud"></span>`,
                                 style: "display: flex; justify-content: flex-end;",
                                 onClick: (event) => rollhandler.roll(this.token, event, "attribute", ability),
                                 //onclick: (event) => rollhandler.roll(this.token, event, "attribute", ability),
@@ -313,7 +313,7 @@ export function initConfig() {
                                 //onClick: (event) => this.actor.rollSkill(skillData.id, { event }),
                             },
                             {
-                                label: `<span class="d${skillData.system.die.sides} dice"></span>`,
+                                label: `<span class="d${skillData.system.die.sides}-hud dice-hud"></span>`,
                                 style: "display: flex; justify-content: flex-end;",
                                 onClick: (event) => rollhandler.roll(this.token, event, "skill", skillData)
                             },
@@ -938,7 +938,7 @@ export function initConfig() {
 
 function registerCombatHelpers() {
     const freeActions = ["move", "run", "speak", "prone", "drop", "ask"]
-    const mainAction = ["multi","attack", "aim", "defend", "grapple", "push", "reload", "support", "shot", "test"]
+    const mainAction = ["multi","attack", "wildAttack", "desperateAttack", "aim", "defend", "grapple", "push", "reload", "support", "shot", "test"]
 
     mainAction.forEach( action => {
         const img = game.i18n.localize(`enhancedcombathud-swade.combatHelper.mainActions.${action}.img`);
