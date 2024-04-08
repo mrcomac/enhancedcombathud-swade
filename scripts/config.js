@@ -1,6 +1,6 @@
 import { MODULE_ID } from "./main.js";
 import {capitalize_first_letter, remove_tags} from './utils.js'
-import { SWADERollHandler, SWADEToolsRollHandler } from './roll.js'
+import { BR2RollHandler, SWADERollHandler, SWADEToolsRollHandler } from './roll.js'
 
 const ECHItems = {};
 const HelperMainButtons = []
@@ -39,9 +39,12 @@ export function initConfig() {
             HelperMainButtons,
             HelperFreeButtons,
         };
-        let isSwadeToolsEnabled = game.modules.get("swade-tools")?.active || false;
+        const isSwadeToolsEnabled = game.modules.get("swade-tools")?.active || false;
+        const isBR2Enabled = game.modules.get("betterrolls-swade2")?.active || false;
         if(isSwadeToolsEnabled) {
             rollhandler = new SWADEToolsRollHandler()
+        } else if(isBR2Enabled) {
+            rollhandler = new BR2RollHandler()
         } else {
             rollhandler = new SWADERollHandler()
         }
@@ -77,6 +80,16 @@ export function initConfig() {
                 details.push({
                     label: game.i18n.localize("enhancedcombathud-swade.Descriptions.Range"),
                     value: item.system.range,
+                });
+
+                details.push({
+                    label: game.i18n.localize("enhancedcombathud-swade.Descriptions.Duration"),
+                    value: item.system.duration,
+                });
+
+                details.push({
+                    label: game.i18n.localize("enhancedcombathud-swade.Descriptions.PP"),
+                    value: item.system.pp,
                 });
             }
             if(item?.system?.shots) {

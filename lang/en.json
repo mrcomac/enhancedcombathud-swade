@@ -134,7 +134,9 @@
 	  "Descriptions": {
 		"Range": "Range",
 		"Shots": "Shots",
-		"Damage":"Damage"
+		"Damage":"Damage",
+		"Duration": "Duration",
+		"PP": "PP"
 	  },
 	  "Icons": {
 		"action": "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
