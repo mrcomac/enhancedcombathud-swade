@@ -3,5 +3,7 @@ export function capitalize_first_letter(string) {
 }
 
 export function remove_tags(text) {
-    return text.replace(/<[^>]*>?/gm, '') 
+    if(text)
+        return text.replace(/<[^>]*>?/gm, '')
+    return ""
 }
