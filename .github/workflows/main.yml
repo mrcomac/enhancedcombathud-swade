@@ -72,14 +72,7 @@ jobs:
       with:
         path: "./module.json"
         prop_path: "compatibility.verified"
-
-    - name: Get maximum
-      id: maximum
-      uses: notiz-dev/github-action-json-property@release
-      with:
-        path: "./module.json"
-        prop_path: "compatibility.maximum"
-   
+  
     - name: Submit package to FoundryVTT Package Release API
       run: |
         curl -X POST "https://api.foundryvtt.com/_api/packages/release_version/" \
@@ -95,7 +88,7 @@ jobs:
               "compatibility": {
                 "minimum": "${{ steps.minimum.outputs.prop }}",
                 "verified": "${{ steps.verified.outputs.prop }}",
-                "maximum": "${{ steps.maximum.outputs.prop }}""
+                "maximum": ""
               }
             }
           }'
