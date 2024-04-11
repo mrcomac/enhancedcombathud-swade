@@ -79,11 +79,7 @@ jobs:
       with:
         path: "./dist/${{ env.package_type }}.json"
         prop_path: "compatibility.maximum"
-
-    - name: Extract tag version number
-      id: get_version
-      uses: battila7/get-version-action@v2
-    
+   
     - name: Submit package to FoundryVTT Package Release API
       run: |
         curl -X POST "https://api.foundryvtt.com/_api/packages/release_version/" \
