@@ -83,7 +83,7 @@
 		  },
 		  "defend": {
 			"name": "Defend",
-			"description": "Use the entire turn to DEFEND and gain +4 Parry. You can move up to your Pace (but not run), or stand still to avoid free attacks (see below).",
+			"description": "Use the entire turn to DEFEND and gain +4 Parry. You can move up to your Pace (but not run), or stand still to avoid free attacks.",
 			"img": "../../../icons/skills/melee/shield-block-gray-orange.webp"
 		  },
 		  "test": {
