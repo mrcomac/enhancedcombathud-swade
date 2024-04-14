@@ -731,7 +731,8 @@ export function initConfig() {
             get label() {
                 switch (this.type) {
                     case "power":
-                        return game.i18n.localize("SWADE.Pow") + `<br /> ${this.actor.system.powerPoints.general.value} / ${this.actor.system.powerPoints.general.max}`;
+                        let keys = Object.keys(token.actor.system.powerPoints)
+                        return game.i18n.localize("SWADE.Pow") + `<br /> ${this.actor.system.powerPoints[keys[keys.length-1]].value} / ${this.actor.system.powerPoints[keys[keys.length-1]].max}`;
                     case "consumable":
                         return "enhancedcombathud-swade.Buttons.useItem.name";
                     case "action":

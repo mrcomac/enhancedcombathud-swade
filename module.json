@@ -17,6 +17,14 @@
         "flags": {}
       }
     ],
+    "bugs": "https://github.com/mrcomac/enhancedcombathud-swade/issues",
+    "media": [
+      {
+        "type": "setup",
+        "url": "https://savageuniverse.com/assets/img/SW_LOGO_FP.webp",
+        "thumbnail": "https://savageuniverse.com/assets/img/SW_LOGO_FP.webp"
+      }
+    ],
     "esmodules": [
       "dist/argo-swade.min.js"
     ],
