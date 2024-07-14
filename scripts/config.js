@@ -475,7 +475,7 @@ export function initConfig() {
                             id: item.id,
                             name: item.name,
                             type: "action",
-                            img: item.icon,
+                            img: item.img,
                             system: {
                                 description:item.description,
                             },
@@ -517,8 +517,8 @@ export function initConfig() {
                 let statuses = []
                 let default_statuses = []
                 CONFIG.statusEffects.forEach( item => {
-                    if(item.id != 'prone')
-                        default_statuses.push(game.i18n.localize(item.label))
+                    if(item.name != 'SWADE.Prone')
+                        default_statuses.push(game.i18n.localize(item.name))
                 }) 
                 // cssClass: this.actor.statuses.has(_status.toLowerCase()) ? "toggle active" : "togle",
                 default_statuses.forEach(_status => {
@@ -731,7 +731,7 @@ export function initConfig() {
             get label() {
                 switch (this.type) {
                     case "power":
-                        let keys = Object.keys(token.actor.system.powerPoints)
+                        let keys = Object.keys(this.token.actor.system.powerPoints)
                         return game.i18n.localize("SWADE.Pow") + `<br /> ${this.actor.system.powerPoints[keys[keys.length-1]].value} / ${this.actor.system.powerPoints[keys[keys.length-1]].max}`;
                     case "consumable":
                         return "enhancedcombathud-swade.Buttons.useItem.name";
@@ -907,6 +907,14 @@ export function initConfig() {
                     },
                     3: {
                         primary: actions[2]?.uuid ?? null,
+                        secondary: null,
+                    },
+                    4: {
+                        primary: actions[3]?.uuid ?? null,
+                        secondary: null,
+                    },
+                    5: {
+                        primary: actions[4]?.uuid ?? null,
                         secondary: null,
                     },
                 };

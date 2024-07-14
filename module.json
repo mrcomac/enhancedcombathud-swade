@@ -48,8 +48,8 @@
       ]
     },
     "compatibility": {
-      "minimum": "11",
-      "verified": "11.315",
+      "minimum": "12",
+      "verified": "12",
       "maximum": ""
     },
     "url": "https://github.com/mrcomac/enhancedcombathud-swade",
