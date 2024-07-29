@@ -517,8 +517,14 @@ export function initConfig() {
                 let statuses = []
                 let default_statuses = []
                 CONFIG.statusEffects.forEach( item => {
-                    if(item.name != 'SWADE.Prone')
-                        default_statuses.push(game.i18n.localize(item.name))
+                    if (Object.hasOwn(item, 'name')) {
+                        if(item.name != 'SWADE.Prone')
+                            default_statuses.push(game.i18n.localize(item.name))
+                    } else if (Object.hasOwn(item, 'label')) {
+                        if(item.label != 'SWADE.Prone')
+                            default_statuses.push(game.i18n.localize(item.label))
+                    }
+                    
                 }) 
                 // cssClass: this.actor.statuses.has(_status.toLowerCase()) ? "toggle active" : "togle",
                 default_statuses.forEach(_status => {
@@ -921,7 +927,7 @@ export function initConfig() {
             }
 
             async _getSets() {
-                const sets = mergeObject(await this.getDefaultSets(), deepClone(this.actor.getFlag("enhancedcombathud", "weaponSets") || {}));
+                const sets = foundry.utils.mergeObject(await this.getDefaultSets(), foundry.utils.deepClone(this.actor.getFlag("enhancedcombathud", "weaponSets") || {}));
             
                 for (const [set, slots] of Object.entries(sets)) {
                   slots.primary = slots.primary ? await fromUuid(slots.primary) : null;
