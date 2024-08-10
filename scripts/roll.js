@@ -44,12 +44,7 @@ export class SWADERollHandler {
 
     async _toggleStatus(event, itemType, item) {
         if(itemType != "effect") {
-            const itemId = item.name.toLowerCase().replace(" ","-")
-            const existsOnActor = this.token.actor.statuses.has(itemId)
-            const data = game.swade.util.getStatusEffectDataById(itemId);
-            data["flags.core.statusId"] = itemId;
-            await this.token.toggleEffect(data, { active: !existsOnActor });
-            
+            await this.actor.toggleStatusEffect(item.id, {overlay: false});
         } else {
             let effect = this.token.actor.effects.filter(el => el.id === item.id)
             if(effect.length == 0) {

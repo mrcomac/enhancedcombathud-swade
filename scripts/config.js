@@ -208,7 +208,6 @@ export function initConfig() {
 
             async _onDeathSave(event) {
                 rollhandler.roll(this.token, event, "attribute", "vigor")
-                //this.actor.rollAttribute("vigor", { event })
             }
 
             async getStatBlocks() {
@@ -308,7 +307,6 @@ export function initConfig() {
                                 label: `<span class="d${abilityData.die.sides}-hud dice-hud"></span>`,
                                 style: "display: flex; justify-content: flex-end;",
                                 onClick: (event) => rollhandler.roll(this.token, event, "attribute", ability),
-                                //onclick: (event) => rollhandler.roll(this.token, event, "attribute", ability),
                             },
                         ],
                         ability,
@@ -323,7 +321,6 @@ export function initConfig() {
                             {
                                 label: skillData.name + `(${skillData.system.attribute})`,
                                 onClick: (event) => rollhandler.roll(this.token, event, "skill", skillData)
-                                //onClick: (event) => this.actor.rollSkill(skillData.id, { event }),
                             },
                             {
                                 label: `<span class="d${skillData.system.die.sides}-hud dice-hud"></span>`,
@@ -469,13 +466,14 @@ export function initConfig() {
                 const effectActor = Array.from(this.actor.effects)
 
                 effectActor.forEach(item => {
-
                     if(!this.defaultStatuses.includes(item.name)) {
                         effects.push({
                             id: item.id,
                             name: item.name,
-                            type: "action",
+                            disabled: item.disabled,
+                            type: "effect",
                             img: item.img,
+                            color: 3,
                             system: {
                                 description:item.description,
                             },
@@ -494,8 +492,10 @@ export function initConfig() {
                     _efItem.forEach(item=>{
                         if(!this.defaultStatuses.includes(item.name)) {
                             effects.push({
+                                id: item.id,
                                 name: item.name,
-                                type: "action",
+                                type: "effect",
+                                disabled: item.disabled,
                                 img: item.icon,
                                 system: {
                                     description:item.description,
@@ -519,23 +519,24 @@ export function initConfig() {
                 CONFIG.statusEffects.forEach( item => {
                     if (Object.hasOwn(item, 'name')) {
                         if(item.name != 'SWADE.Prone')
-                            default_statuses.push(game.i18n.localize(item.name))
+                            default_statuses.push(item)
                     } else if (Object.hasOwn(item, 'label')) {
                         if(item.label != 'SWADE.Prone')
-                            default_statuses.push(game.i18n.localize(item.label))
+                            default_statuses.push(item)
                     }
                     
-                }) 
-                // cssClass: this.actor.statuses.has(_status.toLowerCase()) ? "toggle active" : "togle",
+                })
                 default_statuses.forEach(_status => {
                     this.defaultStatuses.push(_status)
                     statuses.push(
-                        {
-                            name: _status,
-                            type: "action",
-                            img: CONFIG.statusEffects.find((el) => el.id ===_status.toLowerCase())?.icon ?? null,
+                        { 
+                            id: _status.id,
+                            name: _status.label ? game.i18n.localize(_status.label) : game.i18n.localize(_status.name),
+                            type: "effect",
+                            disabled: _status?.disabled,
+                            img: _status?.icon ?? null,
                             system: {
-                                description: CONFIG.statusEffects.find((el) => el.id ===_status.toLowerCase())?.description ?? _status,
+                                description: _status?.description ?? _status,
                             },
                             flags: {
                                 hud: {
@@ -546,8 +547,6 @@ export function initConfig() {
                     )
                 })
                 return statuses
-    
-    
             }
 
             async _getButtons() {
@@ -654,7 +653,6 @@ export function initConfig() {
 
             async getTooltipData() {
                 const tooltipData = await getTooltipDetails(this.item);
-                //tooltipData.propertiesLabel = "";
                 return tooltipData;
             }
 
@@ -662,14 +660,18 @@ export function initConfig() {
                 ui.ARGON.interceptNextDialog(event.currentTarget);
                 if(this.item?.flags?.hud?.subtype == "helper") return
                 if(this.item?.flags?.hud?.subtype == "status") {
-                    //this._toggleStatus(event, this.item.name)
-                    rollhandler.roll(this.token, event, "status", this.item)
+                    await rollhandler.roll(this.token, event, "status", this.item);
+                    if (this.actor.statuses.has(this.item.id)) {
+                        
+                        event.srcElement.style.filter= "brightness(150%)";
+                    } else {
+                        event.srcElement.style.filter= "";
+                    }
+                    await this.render(true);
                 } else if(this.item?.flags?.hud?.subtype == "effect") {
-                    //this._toggleStatus(event, this.item.name)
-                    rollhandler.roll(this.token, event, "effect", this.item)
+                    rollhandler.roll(this.token, event, "effect", this.item);
                 } else {
                     rollhandler.roll(this.token, event, "show", this.item)
-                    //await this.item.show();
                 }
             }
 
@@ -709,6 +711,17 @@ export function initConfig() {
                     ui.ARGON.updateItemButtons(weapons);
                 }
             }
+
+            async activateListeners(html) {
+                await super.activateListeners(html);
+                const span = html.querySelector("span");
+                if (this.item?.type == "effect") {
+                    if (this.actor.statuses.has(this.item.id)) {
+                        html.style.filter= "brightness(150%)";
+                    }
+                }
+              }
+
 
             get quantity() {
                 if(this.item?.range) {
@@ -785,6 +798,10 @@ export function initConfig() {
                     return new ARGON.MAIN.BUTTON_PANELS.ButtonPanel({ id: this.id, buttons: this.items.map((item) => new SWADEItemButton({ item })) });
                 }
             }
+
+            async activateListeners(html) {
+                await super.activateListeners(html);
+            }
         }
 
         
@@ -850,7 +867,6 @@ export function initConfig() {
                         RUNNING -= 2
                     ui.ARGON.components.movement.updateMovement();
                     rollhandler.roll(this.token, event, "status", this.item)
-                    //this._toggleStatus(event, this.item.name)
                 } else if(this.item.name.toLowerCase() == "run") {
                     const runtotal = await rollhandler.roll(this.token, event, "runningDie", this.item)
                     if(RUNNING == 0)
@@ -863,20 +879,15 @@ export function initConfig() {
                     switch (this.item?.flags?.hud?.subtype) {
                         case "addbennie":
                             rollhandler.roll(this.token, event, "benny", "give")
-                            //this._adjustBennies(event, "give")
                             break
                         case "spendbennie":
                             rollhandler.roll(this.token, event, "benny", "spend")
-                            //this._adjustBennies(event, "spend")
                             break
                         default:
                             rollhandler.roll(this.token, event, "show", this.item)
-                            //this.item.show()
-
                     }
                 } else {
                     rollhandler.roll(this.token, event, "show", this.item)
-                    //this.item.show()
                 }                
             }
         }

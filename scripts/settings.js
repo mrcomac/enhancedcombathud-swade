@@ -2,8 +2,6 @@ import { MODULE_ID } from "./main.js";
 
 export function registerSettings() {
     const settings = {};
-
-    //registerSettingsArray(settings);
 }
 
 export function getSetting(key) {
