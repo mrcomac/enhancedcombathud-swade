@@ -44,7 +44,11 @@ export class SWADERollHandler {
 
     async _toggleStatus(event, itemType, item) {
         if(itemType != "effect") {
-            await this.actor.toggleStatusEffect(item.id, {overlay: false});
+            let id = item.id;
+            if (!id) {
+                id = item.name.toLowerCase();
+            }
+            await this.actor.toggleStatusEffect(id, {overlay: false});
         } else {
             let effect = this.token.actor.effects.filter(el => el.id === item.id)
             if(effect.length == 0) {

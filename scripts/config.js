@@ -584,11 +584,7 @@ export function initConfig() {
             async _getButtons() {
                 const buttons = [new SWADEItemButton({ item: null, isWeaponSet: true, isPrimary: false })];
                 const helperButtons = !HelperFreeButtons.length ? [] : [new SWADEButtonPanelButton({ type: "helpFreeActions", items: HelperFreeButtons, color: this.color })];
-                const effect = CONFIG.statusEffects.filter(item => item.id==="prone")
-                if(effect.length) {
-                    ECHItems["prone"].system.description = remove_tags(effect[0].description);
-                }
-
+                
                 const button = new SWADESpecialActionButton(ECHItems["prone"], this.color)
                 buttons.push(button)
                 
@@ -1358,12 +1354,10 @@ function registerItems() {
         },
     };
 
-    
-    let description = "Go prone";
-   
     ECHItems["prone"] = {
+        id: "prone",
         name: "Prone",
-        description: description,
+        description: "Go prone",
         type: "action",
         img: "icons/magic/control/silhouette-fall-slip-prone.webp",
         system: {
