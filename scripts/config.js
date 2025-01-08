@@ -1,7 +1,7 @@
-import { MODULE_ID } from "./main.js";
 import {capitalize_first_letter, remove_tags} from './utils.js'
 import { BR2RollHandler, SWADERollHandler, SWADEToolsRollHandler } from './roll.js'
 
+const MODULE_ID = "enhancedcombathud-swade";
 const ECHItems = {};
 const HelperMainButtons = []
 const HelperFreeButtons = []
@@ -496,7 +496,7 @@ export function initConfig() {
                                 name: item.name,
                                 type: "effect",
                                 disabled: item.disabled,
-                                img: item.icon,
+                                img: item.img,
                                 system: {
                                     description:item.description,
                                 },
@@ -534,7 +534,7 @@ export function initConfig() {
                             name: _status.label ? game.i18n.localize(_status.label) : game.i18n.localize(_status.name),
                             type: "effect",
                             disabled: _status?.disabled,
-                            img: _status?.icon ?? null,
+                            img: _status?.img ?? null,
                             system: {
                                 description: _status?.description ?? _status,
                             },
@@ -720,8 +720,8 @@ export function initConfig() {
 
 
             get quantity() {
-                if(this.item?.range) {
-                    return this.item.system.currentShots
+                if(this.item.system.rangeType == 1) {
+                    return this.item.system.currentShots;
                 }
                 return null
             }
@@ -818,7 +818,7 @@ export function initConfig() {
 
             get movementMax() {
                 if(RUNNING != 0 ) return RUNNING / canvas.scene.dimensions.distance;
-                return this.actor.system.stats.speed.value / canvas.scene.dimensions.distance;
+                return this.actor.system.pace.ground / canvas.scene.dimensions.distance;
             }
         }
 
@@ -858,7 +858,7 @@ export function initConfig() {
             async _onLeftClick(event) {
                 if(this.item.name.toLowerCase() == "prone") {
                     if(RUNNING == 0)
-                        RUNNING = this.actor.system.stats.speed.value-2
+                        RUNNING = this.actor.system.pace.ground-2
                     else 
                         RUNNING -= 2
                     ui.ARGON.components.movement.updateMovement();
@@ -868,7 +868,7 @@ export function initConfig() {
                     if(RUNNING == 0)
                         RUNNING = runtotal.total;
                     else
-                        RUNNING = runtotal.total - (this.actor.system.stats.speed.value - RUNNING)
+                        RUNNING = runtotal.total - (this.actor.system.pace.ground - RUNNING)
                     ui.ARGON.components.movement.updateMovement();
                 }
                 else if(this.item.type == "action") {
