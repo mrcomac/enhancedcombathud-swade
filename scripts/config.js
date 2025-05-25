@@ -824,6 +824,7 @@ export function initConfig() {
 
         class SWADESpecialActionButton extends ARGON.MAIN.BUTTONS.ActionButton {
             constructor(specialItem, color=0) {
+                console.warn("Special Item", specialItem);
                 super();
                 this.color = color;
                 const actorItem = this.actor.items.getName(specialItem.name);
@@ -1223,28 +1224,29 @@ function registerItems() {
                 },
             },
             effects: [
-                {
-                    _id: "8FtZnIC1vbyKZ6xF",
-                    changes: [],
-                    disabled: false,
-                    duration: {
-                        startTime: null,
-                        turns: 1,
-                    },
-                    icon: "modules/enhancedcombathud/icons/journey.webp",
-                    label: "Disengage",
-                    origin: "Item.wyQkeuZkttllAFB1",
-                    transfer: false,
-                    flags: {
-                        dae: {
-                            stackable: "none",
-                            macroRepeat: "none",
-                            specialDuration: [],
-                            transfer: false,
-                        },
-                    },
-                    tint: "",
-                },
+                // {
+                //     _id: "8FtZnIC1vbyKZ6xF",
+                //     name: game.i18n.localize("enhancedcombathud-swade.Buttons.addBenny.name"),
+                //     changes: [],
+                //     disabled: false,
+                //     duration: {
+                //         startTime: null,
+                //         turns: 1,
+                //     },
+                //     icon: "modules/enhancedcombathud/icons/journey.webp",
+                //     label: "Disengage",
+                //     origin: "Item.wyQkeuZkttllAFB1",
+                //     transfer: false,
+                //     flags: {
+                //         dae: {
+                //             stackable: "none",
+                //             macroRepeat: "none",
+                //             specialDuration: [],
+                //             transfer: false,
+                //         },
+                //     },
+                //     tint: "",
+                // },
             ],
             sort: 0,
             flags: {
@@ -1319,28 +1321,28 @@ function registerItems() {
             },
         },
         effects: [
-            {
-                _id: "8FtZnIC1vbyKZ6xF",
-                changes: [],
-                disabled: false,
-                duration: {
-                    startTime: null,
-                    turns: 1,
-                },
-                icon: "modules/enhancedcombathud/icons/journey.webp",
-                label: "Disengage",
-                origin: "Item.wyQkeuZkttllAFB1",
-                transfer: false,
-                flags: {
-                    dae: {
-                        stackable: "none",
-                        macroRepeat: "none",
-                        specialDuration: [],
-                        transfer: false,
-                    },
-                },
-                tint: "",
-            },
+            // {
+            //     _id: "8FtZnIC1vbyKZ6xF",
+            //     changes: [],
+            //     disabled: false,
+            //     duration: {
+            //         startTime: null,
+            //         turns: 1,
+            //     },
+            //     icon: "modules/enhancedcombathud/icons/journey.webp",
+            //     label: "Disengage",
+            //     origin: "Item.wyQkeuZkttllAFB1",
+            //     transfer: false,
+            //     flags: {
+            //         dae: {
+            //             stackable: "none",
+            //             macroRepeat: "none",
+            //             specialDuration: [],
+            //             transfer: false,
+            //         },
+            //     },
+            //     tint: "",
+            // },
         ],
         sort: 0,
         flags: {
@@ -1426,6 +1428,7 @@ function registerItems() {
                     turns: 1,
                 },
                 icon: "modules/enhancedcombathud/icons/journey.webp",
+                name: "Disengage",
                 label: "Disengage",
                 origin: "Item.wyQkeuZkttllAFB1",
                 transfer: false,
