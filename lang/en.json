@@ -120,6 +120,10 @@
 		"useItem": {
 		  "name": "USE ITEM",
 		  "description": "Use an item"
+		},
+		"useWeapon": {
+		  "name": "USE WEAPON",
+		  "description": "Use a weapon from your inventory"
 		}
 	  },
 	  "Titles": {
@@ -145,6 +149,7 @@
 		"power": "icons/skills/trades/academics-book-study-runes.webp",
        	"feat": "icons/commodities/currency/coin-embossed-sword-copper.webp",
         "consumable": "icons/consumables/drinks/alcohol-spirits-bottle-blue.webp",
+        "weapon": "icons/skills/melee/weapons-crossed-swords-yellow.webp",
 		"run": "icons/skills/movement/figure-running-gray.webp",
 		"statuses": "icons/magic/symbols/symbol-lightning-bolt.webp",
         "effects": "icons/skills/toxins/cauldron-bubbles-overflow-green.webp"

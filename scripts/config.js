@@ -399,11 +399,13 @@ export function initConfig() {
             async _getButtons() {
                 const spellItems = this.actor.items.filter((item) => item.type === "power");
                 const generalactionsItems = this.actor.items.filter((item) => item.type === "action" &&  !["disarm", "jump", "grapple", "push"].includes(item.name.toLowerCase()));
-                const featItems = [] 
+                const featItems = []
                 const consumableItems = this.actor.items.filter((item) => item.type === "consumable" && item.system.subtype === "regular");
+                const weaponItems = this.actor.items.filter((item) => item.type === "weapon");
 
                 const actionButton = !generalactionsItems ? [] : [new SWADEButtonPanelButton({ type: "action", items: generalactionsItems, color: this.color })];
                 const spellButton = !spellItems.length ? [] : [new SWADEButtonPanelButton({ type: "power", items: spellItems, color: this.color })];
+                const weaponButton = !weaponItems.length ? [] : [new SWADEButtonPanelButton({ type: "weapon", items: weaponItems, color: this.color })];
                 const helperButtons = !HelperMainButtons.length ? [] : [new SWADEButtonPanelButton({ type: "helpMainActions", items: HelperMainButtons, color: this.color })];
                 const specialActions = Object.values(ECHItems);
 
@@ -435,8 +437,9 @@ export function initConfig() {
 
                 }
                 
-                buttons.push(...[new SWADEItemButton({ item: null, isWeaponSet: true, isPrimary: true }), 
+                buttons.push(...[new SWADEItemButton({ item: null, isWeaponSet: true, isPrimary: true }),
                                  ...bennieButtons,
+                                 ...weaponButton,
                                  ...spellButton,
                                  ...splitButtons,
                                 ...actionButton,
@@ -750,6 +753,8 @@ export function initConfig() {
                         return game.i18n.localize("SWADE.Pow") + `<br /> ${this.actor.system.powerPoints[keys[keys.length-1]].value} / ${this.actor.system.powerPoints[keys[keys.length-1]].max}`;
                     case "consumable":
                         return "enhancedcombathud-swade.Buttons.useItem.name";
+                    case "weapon":
+                        return "enhancedcombathud-swade.Buttons.useWeapon.name";
                     case "action":
                         return "enhancedcombathud-swade.Titles.Actions";
                     case "run":
@@ -824,7 +829,6 @@ export function initConfig() {
 
         class SWADESpecialActionButton extends ARGON.MAIN.BUTTONS.ActionButton {
             constructor(specialItem, color=0) {
-                console.warn("Special Item", specialItem);
                 super();
                 this.color = color;
                 const actorItem = this.actor.items.getName(specialItem.name);
